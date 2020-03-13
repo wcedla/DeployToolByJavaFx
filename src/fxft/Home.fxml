@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="rootPane" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="fxft.HomeController">
+    <children>
+
+        <TreeView fx:id="navigationTreeView" prefWidth="300.0" AnchorPane.bottomAnchor="30.0"
+                  AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="30.0"/>
+        <AnchorPane fx:id="installedRootPane" minWidth="600.0" prefHeight="440.0" visible="true"
+                    AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+            <children>
+                <TreeTableView fx:id="moduleTreeTable" minWidth="600.0" AnchorPane.bottomAnchor="50.0"
+                               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                        <TreeTableColumn fx:id="nameColumn" maxWidth="600" minWidth="300" prefWidth="200" text="模块名称"/>
+                        <TreeTableColumn fx:id="versionColumn" maxWidth="300" minWidth="200" prefWidth="200"
+                                         text="版本号"/>
+                        <TreeTableColumn fx:id="statusColumn" maxWidth="300" minWidth="200" prefWidth="200" text="状态"/>
+                    </columns>
+                </TreeTableView>
+
+                <HBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                      AnchorPane.rightAnchor="0.0">
+                    <children>
+                        <Button fx:id="startService" disable="true" mnemonicParsing="false" onAction="#openServiceClick"
+                                prefHeight="30.0" prefWidth="80.0" text="开启"/>
+                        <Button fx:id="stopService" disable="true" mnemonicParsing="false" onAction="#stopService"
+                                prefHeight="30.0" prefWidth="80.0" text="停止"/>
+                        <Button fx:id="restartService" disable="true" mnemonicParsing="false" onAction="#restartService"
+                                prefHeight="30.0" prefWidth="80.0" text="重启"/>
+                        <Button fx:id="refreshService" disable="true" mnemonicParsing="false" onAction="#refreshService"
+                                prefHeight="30.0" prefWidth="80.0" text="刷新"/>
+                    </children>
+                </HBox>
+
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="moduleConfigEditRoot" prefHeight="440.0" visible="false" AnchorPane.leftAnchor="350.0"
+                    AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+            <children>
+                <TextArea fx:id="moduleConfigEdit" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                <HBox alignment="CENTER" spacing="40" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                      AnchorPane.rightAnchor="0.0">
+                    <children>
+                        <Button fx:id="saveEdit" onAction="#saveEditClick" prefHeight="30.0" prefWidth="120.0"
+                                text="保存并重启"/>
+                        <Button fx:id="reloadEdit" onAction="#reloadEditClick" prefHeight="30.0" prefWidth="80.0"
+                                text="刷新文件"/>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="moduleLogRoot" visible="false" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="350.0"
+                    AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="490.0">
+            <children>
+                <ComboBox fx:id="moduleLogSelect" prefHeight="20.0" promptText="debug日志"/>
+                <TextArea fx:id="moduleLogTextArea" editable="false" prefHeight="400" AnchorPane.bottomAnchor="0"
+                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="40.0"/>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="serverStartLogRoot" visible="true" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="350.0"
+                    AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="490.0">
+            <children>
+                <Label prefHeight="20.0" text="日志:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                <TextArea fx:id="deployTextArea" editable="false" prefHeight="400" AnchorPane.bottomAnchor="0"
+                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="40.0"/>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="notInstallRootPane" visible="false" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="350.0"
+                    AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+            <children>
+                <ListView fx:id="installListView" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                <Label text="服务安装用户名:" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="0.0"/>
+                <Label fx:id="windowsUserName" text="wcedla" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="120.0"/>
+                <Label text="服务安装密码:" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="0.0"/>
+                <TextField fx:id="windowsPwd" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="120.0"/>
+                <Label text="安装路径:" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="0.0"/>
+                <Button fx:id="installPath" onAction="#installPathClick" text="安装位置" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="120.0"/>
+                <Label fx:id="installPathText" text="c:/wcedla/install" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="220.0"/>
+                <HBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0"
+                      AnchorPane.rightAnchor="0.0">
+                    <Button fx:id="installConfirm" onAction="#installConfirmClick" prefHeight="40.0" prefWidth="150.0"
+                            text="确认安装"/>
+                    <Button fx:id="installOk" onAction="#installOkClick" prefHeight="40.0" prefWidth="150.0"
+                            text="安装完成"/>
+                </HBox>
+            </children>
+        </AnchorPane>
+        <BorderPane fx:id="loadingRoot" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <center>
+                <ProgressIndicator fx:id="progressbar" maxHeight="80" maxWidth="80"/>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>

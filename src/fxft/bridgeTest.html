@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>JsBridge测试网页</title>
+</head>
+<script>
+    //注册事件监听，初始化
+    function setupWebViewJavascriptBridge(callback) {
+        if (window.WebViewJavascriptBridge) {
+            callback(WebViewJavascriptBridge)
+        } else {
+            document.addEventListener(
+                'WebViewJavascriptBridgeReady'
+                , function () {
+                    callback(WebViewJavascriptBridge)
+                },
+                false
+            );
+        }
+    }
+
+    //回调函数，接收java发送来的数据
+    setupWebViewJavascriptBridge(function (bridge) {
+        //默认接收
+        bridge.init(function (message, responseCallback) {
+            document.getElementById("htmlOutput").innerHTML = '默认接收器收到android发来的数据:' + message;
+            var responseData = '这是js默认接收器返回给android的数据';
+            responseCallback(responseData); //回传数据给java
+        });
+        //指定接收，参数functionInJs 与java保持一致
+        bridge.registerHandler("jsCustomReceiver", function (data, responseCallback) {
+            document.getElementById("htmlOutput").innerHTML = '自定义接收器收到android发来的数据:' + data;
+            var responseData = 'js指定接收完毕，并回传数据给java';
+            responseCallback(responseData); //回传数据给java
+        });
+    })
+
+    function forAndroidDefault() {
+        window.WebViewJavascriptBridge.send("js发送给android默认接收器的数据"
+            , function (responseData) { //处理java回传的数据
+                document.getElementById("htmlOutput").innerHTML = responseData;
+            })
+    }
+
+    function forAndroidCustom() {
+        window.WebViewJavascriptBridge.callHandler("androidCustomReceiver", "js发送给android自定义接收器的数据"
+            , function (responseData) { //处理java回传的数据
+                document.getElementById("htmlOutput").innerHTML = responseData;
+            })
+    }
+
+</script>
+<body>
+<div>
+    <button id="forAndroidDefault" onclick="forAndroidDefault()">发送给android默认接收</button>
+</div>
+<div>
+    <button id="forAndroidCustom" onclick="forAndroidCustom()">发送给android自定义接收</button>
+</div>
+<br/>
+<br/>
+<div id="htmlOutput">html显示信息</div>
+</body>
+</html>

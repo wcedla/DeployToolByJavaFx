@@ -1,0 +1,26 @@
+[installConfig]
+deployServerURL=http://172.16.8.160:3002/ascs
+installDir=modules
+profiles=default
+reqNonEncJar=false
+
+[httpDeployConfig]
+run.nacos.addr=172.16.15.45:8848
+run.nacos.namespace=861e8068-5c0e-447c-aff6-30a5f1ff699b
+version.reportURL=
+
+#808网关
+[gwagent-808]
+ascs-gateway-agent, ascs-gwagent-808.jar, 0.1.0_RELEASE
+#数据处理
+[cmdproc]
+ascs-cmd-proc, ascs-cmd-proc.jar, 0.1.2-SNAPSHOT
+
+[webgw]
+ascs-web-gateway, ascs-web-gateway.jar, 0.0.2-SNAPSHOT
+
+[web-security]
+module-starter, module-starter.jar, 0.0.6-RELEASE
+ascs-security, ascs-security.jar, 0.0.1-SNAPSHOT
+
+
